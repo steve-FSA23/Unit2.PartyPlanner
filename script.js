@@ -5,7 +5,7 @@ const form = document.querySelector("form");
 
 // API Url
 const apiUrl =
-    "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2308-ACC-ET-WEB-PT-B/events";
+    "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2308-acc-et-web-pt-b/events";
 
 // Function fetches "apiUrl" and returns "data"
 async function eventData() {
@@ -22,7 +22,6 @@ eventData();
 
 // Function creates the HTML dynamically and displays the data
 function partyListComponents(party) {
-    console.log(party);
     party.data.map((info) => {
         const date = new Date(Date.parse(info.date)); // Formating Date "10/15/23"
         const ampm = date.getHours() >= 12 ? "PM" : "AM"; // Display PM or AM based on the user local device
@@ -62,10 +61,11 @@ async function deleteParty(partyId) {
 // Function to handle the form submission
 async function handleFormSubmit(event) {
     event.preventDefault();
-    const name = event.target.elements.name.value;
-    const description = event.target.elements.description.value;
-    const date = event.target.elements.date.value;
-    const location = event.target.elements.location.value;
+    const name = event.target.name.value;
+    const description = event.target.description.value;
+    const dateVal = event.target.date.value;
+    const location = event.target.location.value;
+    const date = new Date(Date.parse(dateVal));
 
     // Create a new party object
     const newParty = {
