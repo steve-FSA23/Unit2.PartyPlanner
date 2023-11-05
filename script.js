@@ -63,6 +63,7 @@ async function handleFormSubmit(event) {
     event.preventDefault();
     const name = event.target.name.value;
     const description = event.target.description.value;
+    console.log(description);
     const dateVal = event.target.date.value;
     const location = event.target.location.value;
     const date = new Date(Date.parse(dateVal));
