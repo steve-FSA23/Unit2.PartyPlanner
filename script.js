@@ -8,20 +8,22 @@ const apiUrl =
     "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2308-acc-et-web-pt-b/events";
 
 // Function fetches "apiUrl" and returns "data"
-async function eventData() {
+async function fetchPartyData() {
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        partyListComponents(data); // Passing data to the function
+        renderPartyList(data); // Passing data to the function
     } catch (error) {
         console.log(error);
     }
 }
 // Initial load
-eventData();
+fetchPartyData();
 
 // Function creates the HTML dynamically and displays the data
-function partyListComponents(party) {
+function renderPartyList(party) {
+    mainContainer.innerHTML = "";
+    console.log("Party Data", party.data);
     party.data.map((info) => {
         const date = new Date(Date.parse(info.date)); // Formating Date "10/15/23"
         const ampm = date.getHours() >= 12 ? "PM" : "AM"; // Display PM or AM based on the user local device
@@ -63,7 +65,6 @@ async function handleFormSubmit(event) {
     event.preventDefault();
     const name = event.target.name.value;
     const description = event.target.description.value;
-    console.log(description);
     const dateVal = event.target.date.value;
     const location = event.target.location.value;
     const date = new Date(Date.parse(dateVal));
@@ -87,7 +88,8 @@ async function handleFormSubmit(event) {
 
         if (response.ok) {
             // Party added successfully, fetch the updated party list
-            partyListComponents();
+            fetchPartyData();
+
             // Clear the form
             event.target.reset();
         } else {
